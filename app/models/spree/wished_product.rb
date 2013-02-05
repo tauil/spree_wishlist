@@ -1,7 +1,8 @@
 class Spree::WishedProduct < ActiveRecord::Base
   belongs_to :variant
   belongs_to :wishlist
-  
-  attr_accessible :wishlist_id, :variant, :variant_id
 
+  scope :active, includes(:variant).where("spree_variants.deleted_at IS NULL")
+
+  attr_accessible :variant_id
 end

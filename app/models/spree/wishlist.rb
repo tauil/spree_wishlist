@@ -1,6 +1,7 @@
 class Spree::Wishlist < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :user, :class_name => Spree.user_class.to_s, :foreign_key => 'user_id'
   has_many :wished_products
+  attr_protected :id
   before_create :set_access_hash
 
   attr_accessible :name, :is_default, :is_private, :user
@@ -10,7 +11,7 @@ class Spree::Wishlist < ActiveRecord::Base
   attr_accessible :name, :is_default, :is_private
 
   def include?(variant_id)
-    self.wished_products.map(&:variant_id).include? variant_id.to_i
+    self.wished_products.active.map(&:variant_id).include? variant_id.to_i
   end
 
   def to_param

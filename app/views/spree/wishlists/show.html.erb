@@ -61,7 +61,7 @@
         <%= wish.created_at.strftime "%m/%d/%Y" %>
       </td>
       <td>
-        <%= number_to_currency(variant.price) %>
+        <%= Spree::Money.new variant.price %>
       </td>
     </tr>
     <% end -%>
